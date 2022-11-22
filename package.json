@@ -1,10 +1,9 @@
 {
-  "name": "cedomca",
+  "name": "cedomca-api",
   "version": "0.0.1",
   "description": "",
   "author": "",
   "private": true,
-  "license": "UNLICENSED",
   "scripts": {
     "postinstall": "husky install",
     "prebuild": "rimraf dist",
@@ -45,6 +44,7 @@
     "cz-conventional-changelog": "3.3.0",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "2.26.0",
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "8.0.2",
     "jest": "28.1.3",

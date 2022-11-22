@@ -1,0 +1,72 @@
+{
+  // ••••••••••••••••••••••••• TypeScript extension ••••••••••••••••••••••••• //
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+
+  // ••••••••••••••••••••••••••••• editor style ••••••••••••••••••••••••••••• //
+  // Configure glob patterns for excluding files and folders.
+  // For example, the file Explorer decides which files and folders to show or hide based on this setting.
+  // Refer to the `search.exclude` setting to define search specific excludes.
+  "files.exclude": {
+    // meta
+    "dist": true,
+    "node_modules": true
+  },
+
+  // ••••••••••••••••••••••••••••••••• misc ••••••••••••••••••••••••••••••••• //
+  "material-icon-theme.activeIconPack": "nest",
+  "todo.embedded.regexFlags": "g",
+
+  // •••••••••••••••••••••••••••••• code style •••••••••••••••••••••••••••••• //
+  "prettier.ignorePath": ".prettierignore",
+  "eslint.options": {
+    "overrideConfigFile": "./.eslintrc.js"
+  },
+  "eslint.validate": ["javascript", "typescript"],
+  "editor.codeActionsOnSave": {
+    // Disable the auto fix to improve performance on save. You should run
+    // `>ESLint: Fix all auto-fixable Problems` by yourself.
+    "source.fixAll.eslint": false,
+    // Disabling this in favor of ESLint plugin that organize imports
+    "source.organizeImports": false
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "[typescript]": {
+    "editor.formatOnSave": false // due to eslint on save
+  },
+  "[javascript]": {
+    "editor.formatOnSave": false // due to eslint on save
+  },
+  "[json]": {
+    "files.insertFinalNewline": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.rulers": [80, 100],
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "editor.formatOnSave": true,
+
+  // ••••••••••••••••••••••••••••••••• Files ••••••••••••••••••••••••••••••••• //
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "[dotenv]": {
+    "files.insertFinalNewline": false
+  },
+  "[markdown]": {
+    "files.trimTrailingWhitespace": false
+  },
+  "files.associations": {
+    ".huskyrc": "json",
+    ".lintstagedrc": "json",
+    ".czrc": "json",
+    "check-deps": "shellscript",
+    "docker-compose": "shellscript",
+    "start-production": "shellscript",
+    "start-development": "shellscript"
+  }
+}

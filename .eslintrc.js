@@ -2,14 +2,11 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: 'tsconfig.json',
-    tsconfigRootDir : __dirname, 
+    tsconfigRootDir: __dirname,
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint/eslint-plugin'],
-  extends: [
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
-  ],
+  plugins: ['import'],
+  extends: ['plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
   root: true,
   env: {
     node: true,
@@ -17,9 +14,39 @@ module.exports = {
   },
   ignorePatterns: ['.eslintrc.js'],
   rules: {
-    '@typescript-eslint/interface-name-prefix': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
+    'no-console': 'off',
+    'no-bitwise': 'off',
+    'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
+
+    'max-len': 'off',
+
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        packageDir: '.',
+        // Files with scripts/modules that will be use only in development
+        devDependencies: ['test/*', 'jest*', 'configs/**/*', 'tools/**/*'],
+      },
+    ],
+    'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', ['index', 'internal', 'object'], ['sibling', 'parent']],
+        pathGroups: [
+          {
+            pattern: '@/**',
+            group: 'internal',
+            position: 'before',
+          },
+        ],
+        pathGroupsExcludedImportTypes: ['builtin'],
+        warnOnUnassignedImports: false,
+        'newlines-between': 'always',
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
+      },
+    ],
   },
 };

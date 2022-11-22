@@ -25,6 +25,7 @@ module.exports = {
         'vscode',
         'readme',
         'husky',
+        'github',
       ],
     ],
   },

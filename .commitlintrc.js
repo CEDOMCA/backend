@@ -26,6 +26,8 @@ module.exports = {
         'readme',
         'husky',
         'github',
+        // First-level directories from root directory
+        'user',
       ],
     ],
   },

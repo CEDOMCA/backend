@@ -1,29 +1,28 @@
-import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
+import { Mapper } from '@automapper/core';
+import { InjectMapper } from '@automapper/nestjs';
+import { Controller, Post, Body } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { UnauthenticatedGuard } from '@/resources/auth/guards';
-
-import { CreateUserDto } from './dto';
+import { CreateUserDto, UserRoDto } from './dto';
+import { User } from './schemas/user.schema';
 import { UserService } from './user.service';
 
 @ApiTags('User')
-@Controller('user')
+@Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    @InjectMapper()
+    private readonly mapper: Mapper,
+    private readonly userService: UserService,
+  ) {}
 
-  @UseGuards(UnauthenticatedGuard)
+  /**
+   * Create a new user.
+   */
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
-  }
+  async create(@Body() createUserDto: CreateUserDto) {
+    const savedUser = await this.userService.create(createUserDto);
 
-  @Get()
-  findAll() {
-    return this.userService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(id);
+    return this.mapper.mapAsync(savedUser, User, UserRoDto);
   }
 }

@@ -5,7 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { BaseDocumentWithIdRoDto } from '@/database/base-documents.ro-dto';
 import { BaseDocumentWithId } from '@/database/base-documents.schema';
 
-import { UserSessionRoDto } from './dto';
+import { UserRoDto, UserSessionRoDto } from './dto';
 import { User } from './schemas/user.schema';
 
 @Injectable()
@@ -21,6 +21,8 @@ export class UserProfile extends AutomapperProfile {
   }
 
   private registerMappingToRoDto(mapper: Mapper): void {
+    createMap(mapper, User, UserRoDto, extend(BaseDocumentWithId, BaseDocumentWithIdRoDto));
+
     createMap(mapper, User, UserSessionRoDto, extend(BaseDocumentWithId, BaseDocumentWithIdRoDto));
   }
 }

@@ -30,6 +30,7 @@ module.exports = {
         // First-level directories from src directory
         'app',
         'database',
+        'docs',
         // First-level directories from resources directory
         'auth',
         'user',

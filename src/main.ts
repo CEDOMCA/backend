@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import * as session from 'express-session';
+import session from 'express-session';
 import ms from 'ms';
-import * as passport from 'passport';
+import passport from 'passport';
 
 import { AppModule } from '@/app/app.module';
 
@@ -19,7 +19,7 @@ async function bootstrap() {
 
   app.use(
     session({
-      secret: process.env.MY_SECRET,
+      secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: false,
       cookie: {

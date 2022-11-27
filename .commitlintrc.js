@@ -19,6 +19,7 @@ module.exports = {
       1,
       'always',
       [
+        'readme',
         'deps',
         'deps-dev',
         // First-level directories from root directory
@@ -26,6 +27,12 @@ module.exports = {
         'readme',
         'husky',
         'github',
+        // First-level directories from src directory
+        'app',
+        'database',
+        // First-level directories from resources directory
+        'auth',
+        'user',
       ],
     ],
   },

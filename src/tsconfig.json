@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.base.json",
+  "include": ["../src"],
+  "exclude": ["../node_modules", "../dist", "../src/scripts", "../test"],
+  "watchOptions": {
+    "excludeDirectories": ["../node_modules", "../dist", "../src/scripts", "../test"]
+  },
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "../dist",
+
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+}

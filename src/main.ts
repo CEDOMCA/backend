@@ -4,7 +4,7 @@ import ms from 'ms';
 import passport from 'passport';
 
 import { AppModule } from '@/app/app.module';
-import { setupApiSpec } from '@/app/setup-api-spec';
+import { setupApiSpec } from '@/docs/setup-api-spec';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

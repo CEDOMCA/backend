@@ -1,8 +1,8 @@
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-import { SetupApiSpecOptions, SwaggerOptions } from '@/app/setup-api-docs.interfaces';
-import { CaseInsensitiveFilterPlugin } from '@/app/swagger-ui-plugins';
+import { SetupApiSpecOptions, SwaggerOptions } from './setup-api-docs.interfaces';
+import { CaseInsensitiveFilterPlugin } from './swagger-ui-plugins';
 
 export const setupApiSpec = (app: INestApplication, specOpts: SetupApiSpecOptions = {}) => {
   const { pageTitle = 'CEDOMCA API Specification', path = 'swagger' } = specOpts;
@@ -24,8 +24,8 @@ export const setupApiSpec = (app: INestApplication, specOpts: SetupApiSpecOption
       displayRequestDuration: true,
       persistAuthorization: true,
       withCredentials: true,
-      defaultModelsExpandDepth: 1,
-      defaultModelExpandDepth: 1,
+      defaultModelsExpandDepth: 2,
+      defaultModelExpandDepth: 2,
       defaultModelRendering: 'model',
       tagsSorter: 'alpha',
       syntaxHighlight: {

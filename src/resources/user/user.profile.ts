@@ -1,6 +1,9 @@
-import { createMap, forMember, mapFrom, Mapper, MappingProfile } from '@automapper/core';
+import { createMap, extend, Mapper, MappingProfile } from '@automapper/core';
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
 import { Injectable } from '@nestjs/common';
+
+import { BaseDocumentWithIdRoDto } from '@/database/base-documents.ro-dto';
+import { BaseDocumentWithId } from '@/database/base-documents.schema';
 
 import { UserSessionRoDto } from './dto';
 import { User } from './schemas/user.schema';
@@ -18,14 +21,6 @@ export class UserProfile extends AutomapperProfile {
   }
 
   private registerMappingToRoDto(mapper: Mapper): void {
-    createMap(
-      mapper,
-      User,
-      UserSessionRoDto,
-      forMember(
-        (d) => d.id,
-        mapFrom((s) => s.id),
-      ),
-    );
+    createMap(mapper, User, UserSessionRoDto, extend(BaseDocumentWithId, BaseDocumentWithIdRoDto));
   }
 }

@@ -1,11 +1,9 @@
 import { AutoMap } from '@automapper/classes';
 
+import { BaseDocumentWithIdRoDto } from '@/database/base-documents.ro-dto';
 import { Roles } from '@/resources/user/user.constants';
 
-export class UserSessionRoDto {
-  @AutoMap()
-  id: string;
-
+export class UserSessionRoDto extends BaseDocumentWithIdRoDto {
   @AutoMap()
   email: string;
 

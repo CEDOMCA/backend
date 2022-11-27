@@ -26,7 +26,10 @@ module.exports = {
         'readme',
         'husky',
         'github',
-        // First-level directories from root directory
+        // First-level directories from src directory
+        'app',
+        'database',
+        // First-level directories from resources directory
         'auth',
         'user',
       ],

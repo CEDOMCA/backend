@@ -4,6 +4,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
+import { BaseDocumentsModule } from '@/database/base-documents.module';
 import { AuthModule } from '@/resources/auth/auth.module';
 import { UserModule } from '@/resources/user/user.module';
 
@@ -15,6 +16,7 @@ import { UserModule } from '@/resources/user/user.module';
       strategyInitializer: classes(),
     }),
 
+    BaseDocumentsModule,
     AuthModule,
     UserModule,
   ],

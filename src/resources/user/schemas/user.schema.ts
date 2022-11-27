@@ -1,13 +1,14 @@
 import { AutoMap } from '@automapper/classes';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, HydratedDocument } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 
+import { BaseDocumentWithId } from '@/database/base-documents.schema';
 import { Roles } from '@/resources/user/user.constants';
 
 export type UserDocument = HydratedDocument<User>;
 
 @Schema()
-export class User extends Document {
+export class User extends BaseDocumentWithId {
   @Prop()
   @AutoMap()
   email: string;

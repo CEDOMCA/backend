@@ -23,3 +23,4 @@ yarn start:dev
 | `MONGO_URI`        | URL utilizada para a conexão com o banco de dados MongoDB | string |
 | `SESSION_SECRET`   | String utilizada para criar o cookie de sessão            | string |
 | `SESSION_LIFETIME` | Tempo de duração do cookie de sessão                      | string |
+| `CORS_ORIGIN`      | URL permitida para CORS                                   | string |

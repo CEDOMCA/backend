@@ -1,21 +1,18 @@
 import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import session from 'express-session';
 import ms from 'ms';
 import passport from 'passport';
 
 import { AppModule } from '@/app/app.module';
+import { setupApiSpec } from '@/app/setup-api-spec';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const config = new DocumentBuilder()
-    .setTitle('CEDOMCA API')
-    .setDescription('The CEDOMCA API description')
-    .setVersion('1.0')
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('swagger', app, document);
+  /**
+   * NOTE: in production, we should not expose the specification.
+   */
+  setupApiSpec(app);
 
   app.use(
     session({

@@ -27,6 +27,7 @@ module.exports = {
         'husky',
         'github',
         // First-level directories from root directory
+        'auth',
         'user',
       ],
     ],

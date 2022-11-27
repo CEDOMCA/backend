@@ -19,6 +19,7 @@ module.exports = {
       1,
       'always',
       [
+        'readme',
         'deps',
         'deps-dev',
         // First-level directories from root directory

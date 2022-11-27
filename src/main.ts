@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as session from 'express-session';
+import ms from 'ms';
 import * as passport from 'passport';
 
 import { AppModule } from '@/app/app.module';
@@ -18,11 +19,11 @@ async function bootstrap() {
 
   app.use(
     session({
-      secret: 'secret',
+      secret: process.env.MY_SECRET,
       resave: false,
       saveUninitialized: false,
       cookie: {
-        maxAge: 1000 * 60,
+        maxAge: ms(process.env.SESSION_LIFETIME),
       },
     }),
   );

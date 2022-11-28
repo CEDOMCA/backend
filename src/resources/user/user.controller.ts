@@ -7,7 +7,7 @@ import { CreateUserDto, UserRoDto } from './dto';
 import { User } from './schemas/user.schema';
 import { UserService } from './user.service';
 
-@ApiTags('User')
+@ApiTags('Users')
 @Controller('users')
 export class UserController {
   constructor(

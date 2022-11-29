@@ -1,0 +1,8 @@
+version: '3.7'
+services:
+  redis-session-storage:
+    image: redis:7-alpine
+    restart: always
+    container_name: cedomca-session-storage
+    ports:
+      - $REDIS_PORT:6379

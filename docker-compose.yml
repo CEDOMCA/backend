@@ -4,5 +4,16 @@ services:
     image: redis:7-alpine
     restart: always
     container_name: cedomca-session-storage
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    environment:
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
     ports:
       - $REDIS_PORT:6379
+  rcli: # to run use `docker compose run rcli` and then `AUTH <REDIS_PASSWORD>` inside the container
+    image: redis:7-alpine
+    container_name: redis-cli
+    restart: always
+    links:
+      - redis-session-storage
+    command: redis-cli -h redis-session-storage

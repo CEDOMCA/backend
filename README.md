@@ -29,3 +29,4 @@ yarn start:dev
 | `CORS_ORIGIN`      | URL permitida para CORS                                   | string |
 | `REDIS_PORT`       | A porta utilizada pelo banco Redis                        | number |
 | `REDIS_HOST`       | URL utilizada pelo banco Redis                            | string |
+| `REDIS_PASSWORD`   | Senha utilizada pelo banco Redis                          | string |

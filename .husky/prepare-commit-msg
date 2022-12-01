@@ -1,4 +1,27 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-exec < /dev/tty && node_modules/.bin/cz --hook || true
+COMMIT_SOURCE=$2
+
+## Do nothing if the message was already passed (via -m or --message or -F or --file)
+## See https://git-scm.com/docs/githooks#_prepare_commit_msg
+[ "${COMMIT_SOURCE}" = "message" ] && exit 0
+
+## Do nothing if the commit is a merge or `.git/MERGE_MSG` file exists
+## See https://git-scm.com/docs/githooks#_prepare_commit_msg
+[ "${COMMIT_SOURCE}" = "merge" ] && exit 0
+
+## Do nothing if a `.git/SQUASH_MSG` file exists
+## See https://git-scm.com/docs/githooks#_prepare_commit_msg
+[ "${COMMIT_SOURCE}" = "squash" ] && exit 0
+
+## Do nothing when doing amend or a copy message commit (via -c, -C or --amend)
+## See https://git-scm.com/docs/githooks#_prepare_commit_msg
+[ "${COMMIT_SOURCE}" = "commit" ] && exit 0
+
+
+(
+  exec < /dev/tty && node_modules/.bin/cz --hook || true
+) || true 2> /dev/null ## Redirecting errors in case of tty is not available (eg: IDEs)
+               ## since this another approach: https://github.com/commitizen/cz-cli/issues/634
+               ## didn't work.

@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { hash } from 'bcryptjs';
 import { Model } from 'mongoose';
+
+import { Roles } from '@/resources/user/user.constants';
 
 import { CreateUserDto } from './dto';
 import { User, UserDocument } from './schemas/user.schema';
@@ -12,6 +14,12 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const hashedPassword = await hash(createUserDto.password, 12);
+
+    if (await this.findOneByEmail(createUserDto.email))
+      throw new BadRequestException('E-mail já cadastrado.');
+
+    if (!createUserDto.role) createUserDto.role = Roles.visitor;
+
     const createdUser = new this.userModel({
       ...createUserDto,
       password: hashedPassword,

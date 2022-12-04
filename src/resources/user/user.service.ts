@@ -18,13 +18,12 @@ export class UserService {
     if (await this.findOneByEmail(createUserDto.email))
       throw new BadRequestException('E-mail já cadastrado.');
 
-    if (!createUserDto.role) createUserDto.role = Roles.visitor;
-
     const createdUser = new this.userModel({
       ...createUserDto,
       password: hashedPassword,
       status: true,
       createdAt: new Date(),
+      role: Roles.visitor,
     });
     return createdUser.save();
   }

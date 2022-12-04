@@ -13,8 +13,9 @@ async function bootstrap() {
   setupApiSpec(app);
 
   app.enableCors({
-    origin: process.env.CORS_ORIGIN,
+    origin: process.env.CORS_ORIGIN.split(','),
     credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   });
 
   app.useGlobalPipes(new ValidationPipe());

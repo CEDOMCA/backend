@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { hash } from 'bcryptjs';
 import { Model } from 'mongoose';
@@ -16,7 +16,7 @@ export class UserService {
     const hashedPassword = await hash(createUserDto.password, 12);
 
     if (await this.findOneByEmail(createUserDto.email))
-      throw new BadRequestException('E-mail já cadastrado.');
+      throw new ConflictException('E-mail já cadastrado.');
 
     const createdUser = new this.userModel({
       ...createUserDto,

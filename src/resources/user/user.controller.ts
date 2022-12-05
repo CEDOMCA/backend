@@ -1,7 +1,7 @@
 import { Mapper } from '@automapper/core';
 import { InjectMapper } from '@automapper/nestjs';
 import { Controller, Post, Body } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiConflictResponse, ApiTags } from '@nestjs/swagger';
 
 import { CreateUserDto, UserRoDto } from './dto';
 import { User } from './schemas/user.schema';
@@ -19,6 +19,8 @@ export class UserController {
   /**
    * Create a new user.
    */
+  @ApiConflictResponse({ description: 'O e-mail já está cadastrado' })
+  @ApiBadRequestResponse({ description: 'Algum campo não segue suas restrições' })
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     const savedUser = await this.userService.create(createUserDto);

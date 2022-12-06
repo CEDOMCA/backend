@@ -11,12 +11,12 @@ export class AuthService {
   async validateUser(email: string, password: string): Promise<User> {
     const userFound = await this.userService.findOneByEmail(email);
     if (!userFound) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('E-mail ou senha incorretos.');
     }
 
     const isValidPassword = await compare(password, userFound.password);
     if (!isValidPassword) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('E-mail ou senha incorretos.');
     }
 
     return userFound;

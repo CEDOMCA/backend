@@ -10,7 +10,7 @@ import {
   Session,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBody, ApiNoContentResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiNoContentResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import type { Request, Response } from 'express';
 
 import { AuthenticatedGuard, LoginGuard, UnauthenticatedGuard } from '@/resources/auth/guards';
@@ -32,6 +32,7 @@ export class AuthController {
   @Post('login')
   @ApiBody({ type: UserLogin })
   @UseGuards(UnauthenticatedGuard, LoginGuard)
+  @ApiUnauthorizedResponse({ description: 'E-mail ou senha incorretos' })
   userLogin(@Session() session: SessionData): UserSessionRoDto {
     return session.passport.user;
   }

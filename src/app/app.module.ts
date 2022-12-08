@@ -10,6 +10,7 @@ import ms from 'ms';
 import passport from 'passport';
 
 import { BaseDocumentsModule } from '@/database/base-documents.module';
+import { SeedModule } from '@/database/seeds/seed.module';
 import { AuthModule } from '@/resources/auth/auth.module';
 import { FontModule } from '@/resources/font/font.module';
 import { UserModule } from '@/resources/user/user.module';
@@ -30,6 +31,8 @@ import { RedisModule } from '@/session/redis.module';
     AuthModule,
     FontModule,
     UserModule,
+
+    SeedModule,
   ],
 })
 export class AppModule implements NestModule {

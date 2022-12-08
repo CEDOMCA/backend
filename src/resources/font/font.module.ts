@@ -10,5 +10,6 @@ import { FontSchema } from './schema/font.schema';
   imports: [MongooseModule.forFeature([{ name: 'Font', schema: FontSchema }])],
   controllers: [FontController],
   providers: [FontService, FontProfile],
+  exports: [FontService, MongooseModule],
 })
 export class FontModule {}

@@ -1,0 +1,388 @@
+[
+  {
+    "name": "Fonte institucional",
+    "description": "Nesta seção serão organizados os documentos institucionais referentes a temas administrativos, pedagógicos e das trajetórias pessoais de docentes.",
+    "attributes": [
+      {
+        "name": "código",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "título",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "tipo",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "autor",
+        "domain": "textual"
+      },
+      {
+        "name": "assunto",
+        "domain": "textual"
+      },
+      {
+        "name": "número da edição",
+        "domain": "numeric"
+      },
+      {
+        "name": "local",
+        "domain": "textual"
+      },
+      {
+        "name": "unidade",
+        "domain": "textual"
+      },
+      {
+        "name": "departamento/colegiado",
+        "domain": "textual"
+      },
+      {
+        "name": "número de páginas",
+        "domain": "numeric"
+      },
+      {
+        "name": "classificação por assunto",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "estado do documento",
+        "domain": "textual"
+      },
+      {
+        "name": "cópia",
+        "domain": "alphanumeric"
+      }
+    ]
+  },
+  {
+    "name": "Fonte bibliográfica",
+    "description": "Nesta seção serão organizados os livros, coleções, ou qualquer outra fonte relacionada a textos.",
+    "attributes": [
+      {
+        "name": "código",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "título",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "subtítulo",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "tipo",
+        "domain": "textual"
+      },
+      {
+        "name": "autor",
+        "domain": "textual"
+      },
+      {
+        "name": "isbn",
+        "domain": "numeric"
+      },
+      {
+        "name": "assunto",
+        "domain": "textual"
+      },
+      {
+        "name": "número da edição",
+        "domain": "numeric"
+      },
+      {
+        "name": "editora",
+        "domain": "textual"
+      },
+      {
+        "name": "local de publicação",
+        "domain": "textual"
+      },
+      {
+        "name": "número de páginas",
+        "domain": "numeric"
+      },
+      {
+        "name": "classificação por assunto",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "tradução",
+        "domain": "textual"
+      },
+      {
+        "name": "título original",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "revisão",
+        "domain": "textual"
+      },
+      {
+        "name": "diagramação",
+        "domain": "textual"
+      },
+      {
+        "name": "capa",
+        "domain": "alphanumeric"
+      }
+    ]
+  },
+  {
+    "name": "Fonte musical escrita",
+    "description": "Nesta seção serão organizados os programas de apresentações musicais e todo e qualquer registro impresso de música.",
+    "attributes": [
+      {
+        "name": "código",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "suporte",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "categoria",
+        "domain": "textual"
+      },
+      {
+        "name": "compositor",
+        "domain": "textual"
+      },
+      {
+        "name": "título",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "subtítulo",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "arranjo",
+        "domain": "textual"
+      },
+      {
+        "name": "precedência anterior",
+        "domain": "textual"
+      },
+      {
+        "name": "editora/gravadora",
+        "domain": "textual"
+      },
+      {
+        "name": "ano",
+        "domain": "numeric"
+      },
+      {
+        "name": "cópia",
+        "domain": "textual"
+      },
+      {
+        "name": "local",
+        "domain": "textual"
+      },
+      {
+        "name": "quantidade de folhas",
+        "domain": "numeric"
+      },
+      {
+        "name": "medidas",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "quantidade de pentagramas",
+        "domain": "numeric"
+      },
+      {
+        "name": "clave",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "tinta",
+        "domain": "textual"
+      }
+    ]
+  },
+  {
+    "name": "Fonte musical sonora",
+    "description": "Nesta seção serão organizados os vinis, fitas cassetes, vídeos e outras fontes gravadas.",
+    "attributes": [
+      {
+        "name": "código",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "suporte",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "categoria",
+        "domain": "textual"
+      },
+      {
+        "name": "compositores",
+        "domain": "textual"
+      },
+      {
+        "name": "título",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "subtítulo",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "arranjos",
+        "domain": "textual"
+      },
+      {
+        "name": "produtor fonográfico",
+        "domain": "textual"
+      },
+      {
+        "name": "produtor executivo",
+        "domain": "textual"
+      },
+      {
+        "name": "técnico de gravação",
+        "domain": "textual"
+      },
+      {
+        "name": "músicos participantes",
+        "domain": "textual"
+      },
+      {
+        "name": "editora/gravadora",
+        "domain": "textual"
+      },
+      {
+        "name": "ano",
+        "domain": "numeric"
+      },
+      {
+        "name": "volume",
+        "domain": "numeric"
+      },
+      {
+        "name": "procedência anterior",
+        "domain": "textual"
+      },
+      {
+        "name": "cópia",
+        "domain": "textual"
+      },
+      {
+        "name": "local",
+        "domain": "textual"
+      },
+      {
+        "name": "medidas",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "áudio",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "legendas",
+        "domain": "textual"
+      },
+      {
+        "name": "extras",
+        "domain": "textual"
+      },
+      {
+        "name": "formato do disco",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "sistema de cor",
+        "domain": "textual"
+      },
+      {
+        "name": "formato de tela",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "tempo total aproximado",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "disponível em outras midias",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "faixas",
+        "domain": "list of object",
+        "schema": {
+          "keys": ["título", "compositores", "lado"],
+          "values": ["alphanumeric", "textual", "textual"]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Fonte iconográfica",
+    "description": "Nesta seção serão incluídas fotografias, mapas, jornais e registros diversos.",
+    "attributes": [
+      {
+        "name": "código",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "autor",
+        "domain": "textual"
+      },
+      {
+        "name": "título",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "assunto",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "suporte",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "técnica",
+        "domain": "textual"
+      },
+      {
+        "name": "idioma",
+        "domain": "textual"
+      },
+      {
+        "name": "editora",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "ilustração",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "local de publicação",
+        "domain": "textual"
+      },
+      {
+        "name": "data de publicação",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "estado do documento",
+        "domain": "textual"
+      },
+      {
+        "name": "cópia",
+        "domain": "alphanumeric"
+      },
+      {
+        "name": "número de páginas",
+        "domain": "numeric"
+      }
+    ]
+  }
+]

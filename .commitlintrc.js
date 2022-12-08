@@ -34,6 +34,7 @@ module.exports = {
         'session',
         // First-level directories from resources directory
         'auth',
+        'font',
         'user',
       ],
     ],

@@ -29,11 +29,13 @@ module.exports = {
         'github',
         // First-level directories from src directory
         'app',
+        'common',
         'database',
         'docs',
         'session',
         // First-level directories from resources directory
         'auth',
+        'font',
         'user',
       ],
     ],

@@ -18,6 +18,16 @@ yarn --frozen-lock-file
 yarn start:dev
 ```
 
+E vá para `http://localhost:3000/swagger` para acessar a especificação da API.
+
+# NPM Scripts
+
+| name        | description                           |
+| :---------- | :------------------------------------ |
+| `start`     | Inicia a aplicação sem watch mode     |
+| `start:dev` | Inicia a aplicação em watch mode      |
+| `seed`      | Popula o banco com dados predefinidos |
+
 # Environment variables
 
 | name               | description                                               | type   |

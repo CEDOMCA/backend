@@ -4,6 +4,9 @@
   "description": "",
   "author": "",
   "private": true,
+  "config": {
+    "src_tsconfig": "src/tsconfig.json"
+  },
   "scripts": {
     "postinstall": "husky install",
     "prebuild": "rimraf dist",
@@ -19,7 +22,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "heroku-postbuild": "NODE_ENV=dev npm install --omit --no-shrinkwrap && npm run build"
+    "heroku-postbuild": "NODE_ENV=dev npm install --omit --no-shrinkwrap && npm run build",
+    "seed": "TS_NODE_PROJECT=$npm_package_config_src_tsconfig ts-node --files -r tsconfig-paths/register ./src/database/seeds/seed.ts"
   },
   "dependencies": {
     "@automapper/classes": "8.7.7",

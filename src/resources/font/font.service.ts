@@ -51,6 +51,14 @@ export class FontService {
       throw new NotFoundException('Fonte não encontrada.');
     }
 
-    return this.fontModel.findById(fontId).exec();
+    const font = await this.fontModel.findById(fontId).exec();
+    if (font === null) {
+      throw new NotFoundException('Fonte não encontrada.');
+    }
+    return font;
+  }
+
+  deleteFont(fontId: string) {
+    return this.fontModel.findByIdAndDelete(fontId).exec();
   }
 }

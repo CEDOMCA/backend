@@ -1,9 +1,21 @@
 import { Mapper } from '@automapper/core';
 import { InjectMapper } from '@automapper/nestjs';
-import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
+  ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiTags,
   ApiUnauthorizedResponse,
@@ -71,5 +83,15 @@ export class FontController {
     const font = await this.fontService.updateFont(fontId, updateFontDto);
 
     return this.mapper.mapAsync(font, Font, FontRoDto);
+  }
+
+  /**
+   * Delete a given font. If the font does not exist, it is ignored.
+   */
+  @Delete(':font_id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiNoContentResponse({ description: 'Fonte deletada com sucesso.' })
+  async deleteFont(@Param('font_id') fontId: string) {
+    return this.fontService.deleteFont(fontId);
   }
 }

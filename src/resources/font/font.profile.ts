@@ -5,8 +5,8 @@ import { Injectable } from '@nestjs/common';
 import { BaseDocumentWithIdRoDto } from '@/database/base-documents.ro-dto';
 import { BaseDocumentWithId } from '@/database/base-documents.schema';
 
-import { FontAttributesRoDto, FontRoDto } from './dto';
-import { Font, FontAttributes } from './schema/font.schema';
+import { AttributeSchemaRoDto, FontAttributesRoDto, FontRoDto } from './dto';
+import { AttributeSchema, Font, FontAttributes } from './schema/font.schema';
 
 @Injectable()
 export class FontProfile extends AutomapperProfile {
@@ -23,11 +23,8 @@ export class FontProfile extends AutomapperProfile {
   private registerMappingToRoDto(mapper: Mapper): void {
     createMap(mapper, Font, FontRoDto, extend(BaseDocumentWithId, BaseDocumentWithIdRoDto));
 
-    createMap(
-      mapper,
-      FontAttributes,
-      FontAttributesRoDto,
-      extend(BaseDocumentWithId, BaseDocumentWithIdRoDto),
-    );
+    createMap(mapper, FontAttributes, FontAttributesRoDto);
+
+    createMap(mapper, AttributeSchema, AttributeSchemaRoDto);
   }
 }

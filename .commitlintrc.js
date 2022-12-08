@@ -29,6 +29,7 @@ module.exports = {
         'github',
         // First-level directories from src directory
         'app',
+        'common',
         'database',
         'docs',
         'session',

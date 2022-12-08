@@ -15,7 +15,7 @@ type AttributeDomain = {
   schema?: {
     keys: Array<string>;
 
-    values: Array<string>;
+    domains: Array<string>;
   };
 };
 

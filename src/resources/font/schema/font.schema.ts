@@ -4,14 +4,29 @@ import { HydratedDocument } from 'mongoose';
 
 import { BaseDocumentWithId } from '@/database/base-documents.schema';
 
-import { AttributesDomain } from '../font.constants';
+import { AttributesDomain, ObjectListDomain } from '../font.constants';
+
+export class AttributeSchema {
+  @AutoMap(() => [String])
+  keys: string[];
+
+  @Prop({ enum: [ObjectListDomain] })
+  @AutoMap(() => [String])
+  domains: ObjectListDomain[];
+}
 
 export class FontAttributes {
+  @Prop()
   @AutoMap()
   name: string;
 
-  @AutoMap()
+  @Prop({ enum: AttributesDomain })
+  @AutoMap(() => String)
   domain: AttributesDomain;
+
+  @Prop({ schema: AttributeSchema, required: false })
+  @AutoMap(() => AttributeSchema)
+  schema?: AttributeSchema;
 }
 
 export type FontDocument = HydratedDocument<Font>;

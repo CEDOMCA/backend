@@ -315,7 +315,7 @@
       },
       {
         "name": "faixas",
-        "domain": "list of object",
+        "domain": "object list",
         "schema": {
           "keys": ["título", "compositores", "lado"],
           "values": ["alphanumeric", "textual", "textual"]

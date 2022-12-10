@@ -43,4 +43,8 @@ export class UserService {
       })
       .exec();
   }
+
+  async delete(id: string): Promise<User | undefined> {
+    return this.userModel.findByIdAndDelete(id).exec();
+  }
 }

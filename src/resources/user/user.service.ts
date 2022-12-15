@@ -1,11 +1,11 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { hash } from 'bcryptjs';
-import { Model } from 'mongoose';
+import { isValidObjectId, Model } from 'mongoose';
 
 import { Roles } from '@/resources/user/user.constants';
 
-import { CreateUserDto } from './dto';
+import { CreateUserDto, UpdateUserDto } from './dto';
 import { User, UserDocument } from './schemas/user.schema';
 
 @Injectable()
@@ -42,6 +42,18 @@ export class UserService {
         email,
       })
       .exec();
+  }
+
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User | undefined> {
+    if (!isValidObjectId(id) || !(await this.findOne(id))) {
+      throw new NotFoundException('Usuário não encontrado.');
+    }
+
+    const updatedUser = await this.userModel
+      .findByIdAndUpdate(id, updateUserDto, { new: true })
+      .exec();
+
+    return updatedUser;
   }
 
   async delete(id: string): Promise<User | undefined> {

@@ -52,6 +52,8 @@ export class AppModule implements NestModule {
           saveUninitialized: false,
           cookie: {
             maxAge: ms(this.configService.get<string>('SESSION_LIFETIME')),
+            sameSite: 'strict',
+            domain: undefined,
           },
         }),
         passport.initialize(),

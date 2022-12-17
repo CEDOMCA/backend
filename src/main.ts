@@ -13,7 +13,7 @@ async function bootstrap() {
   setupApiSpec(app);
 
   app.enableCors({
-    origin: process.env.CORS_ORIGIN.split(','),
+    origin: true, // this should be whitelisted in production
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   });

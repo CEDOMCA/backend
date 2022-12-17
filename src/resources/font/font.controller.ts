@@ -10,7 +10,6 @@ import {
   Param,
   Post,
   Put,
-  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -18,18 +17,13 @@ import {
   ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiTags,
-  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-
-import { AuthenticatedGuard } from '@/resources/auth/guards';
 
 import { CreateFontDto, FontRoDto, UpdateFontDto } from './dto';
 import { FontService } from './font.service';
 import { Font } from './schema/font.schema';
 
 @Controller('fonts')
-@UseGuards(AuthenticatedGuard)
-@ApiUnauthorizedResponse({ description: 'Usuário não está logado.' })
 @ApiTags('Fonts')
 export class FontController {
   constructor(

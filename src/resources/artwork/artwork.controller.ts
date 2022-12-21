@@ -12,7 +12,12 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { ApiNoContentResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiConflictResponse,
+  ApiNoContentResponse,
+  ApiNotFoundResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import { ArtworkService } from './artwork.service';
 import { ArtworkRoDto, CreateArtworkDto, QueryArtworkDto } from './dto';
@@ -42,6 +47,7 @@ export class ArtworkController {
    * Show one artwork.
    */
   @Get(':artwork_id')
+  @ApiNotFoundResponse({ description: 'Obra não encontrada.' })
   async getOneArtwork(@Param('artwork_id') artworkId: string) {
     const artwork = await this.artworkService.getOneArtwork(artworkId);
 
@@ -52,6 +58,7 @@ export class ArtworkController {
    * Create a new artwork.
    */
   @Post()
+  @ApiConflictResponse({ description: 'Já existe uma obra com o código informado.' })
   async createArtwork(@Body() createArtworkDto: CreateArtworkDto) {
     const artwork = await this.artworkService.createArtwork(createArtworkDto);
 
@@ -62,6 +69,7 @@ export class ArtworkController {
    * Update a given artwork.
    */
   @Put(':artwork_id')
+  @ApiConflictResponse({ description: 'Já existe uma obra com o código informado.' })
   async updateOneArtwork(
     @Param('artwork_id') artworkId: string,
     @Body() createArtworkDto: CreateArtworkDto,

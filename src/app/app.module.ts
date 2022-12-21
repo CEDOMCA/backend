@@ -11,6 +11,7 @@ import passport from 'passport';
 
 import { BaseDocumentsModule } from '@/database/base-documents.module';
 import { SeedModule } from '@/database/seeds/seed.module';
+import { ArtworkModule } from '@/resources/artwork/artwork.module';
 import { AuthModule } from '@/resources/auth/auth.module';
 import { FontModule } from '@/resources/font/font.module';
 import { UserModule } from '@/resources/user/user.module';
@@ -28,6 +29,7 @@ import { RedisModule } from '@/session/redis.module';
     }),
 
     BaseDocumentsModule,
+    ArtworkModule,
     AuthModule,
     FontModule,
     UserModule,

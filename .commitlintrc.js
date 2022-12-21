@@ -34,6 +34,7 @@ module.exports = {
         'docs',
         'session',
         // First-level directories from resources directory
+        'artwork',
         'auth',
         'font',
         'user',

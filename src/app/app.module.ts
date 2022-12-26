@@ -11,6 +11,7 @@ import passport from 'passport';
 
 import { BaseDocumentsModule } from '@/database/base-documents.module';
 import { SeedModule } from '@/database/seeds/seed.module';
+import { MailModule } from '@/mail/mail.module';
 import { ArtworkModule } from '@/resources/artwork/artwork.module';
 import { AuthModule } from '@/resources/auth/auth.module';
 import { FontModule } from '@/resources/font/font.module';
@@ -19,6 +20,7 @@ import { RedisModule } from '@/session/redis.module';
 
 @Module({
   imports: [
+    MailModule,
     RedisModule,
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRoot(process.env.MONGO_URI, {

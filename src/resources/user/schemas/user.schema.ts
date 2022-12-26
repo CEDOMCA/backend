@@ -50,6 +50,10 @@ export class User extends BaseDocumentWithId {
   @Prop()
   @AutoMap()
   createdAt: Date;
+
+  @Prop()
+  @AutoMap()
+  authKey?: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

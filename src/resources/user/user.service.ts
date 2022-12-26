@@ -1,8 +1,16 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { hash } from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import { isValidObjectId, Model } from 'mongoose';
 
+import { MailService } from '@/mail/mail.service';
 import { Roles } from '@/resources/user/user.constants';
 
 import { CreateUserDto, UpdateUserDto } from './dto';
@@ -10,7 +18,13 @@ import { User, UserDocument } from './schemas/user.schema';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel('User') private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel('User')
+    private userModel: Model<UserDocument>,
+
+    private readonly configService: ConfigService,
+    private readonly mailService: MailService,
+  ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const hashedPassword = await hash(createUserDto.password, 12);
@@ -58,5 +72,52 @@ export class UserService {
 
   async delete(id: string): Promise<User | undefined> {
     return this.userModel.findByIdAndDelete(id).exec();
+  }
+
+  async recoverPasswordForUser(email: string): Promise<void> {
+    const user = await this.findOneByEmail(email);
+
+    if (user.authKey === undefined) {
+      user.authKey = jwt.sign({ email: user.email }, this.configService.get('JWT_SECRET'), {
+        expiresIn: this.configService.get('JWT_EXPIRES_IN'),
+      });
+    }
+
+    await user.save();
+
+    const changePasswordUrl = `${this.configService.get<string>(
+      // eslint-disable-next-line prettier/prettier
+      'FRONTEND_URL',
+    )}/change-password?authKey=${user.authKey}`;
+    await this.mailService.sendEmailToRecoverPassword(user.email, user.fullName, changePasswordUrl);
+  }
+
+  async changePasswordForUser(password: string, authKey: string) {
+    try {
+      const decodedAuthKey = jwt.verify(authKey, this.configService.get('JWT_SECRET')) as {
+        email: string;
+      };
+
+      const user = await this.userModel.findOne({
+        email: decodedAuthKey.email,
+        authKey,
+      });
+
+      if (!user) {
+        throw new BadRequestException('Chave de autenticação inválida11.');
+      }
+
+      await this.userModel.findOneAndUpdate(
+        {
+          email: decodedAuthKey.email,
+        },
+        {
+          password,
+          authKey: undefined,
+        },
+      );
+    } catch (err) {
+      throw new BadRequestException('Chave de autenticação inválida22.');
+    }
   }
 }

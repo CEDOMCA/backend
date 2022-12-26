@@ -6,8 +6,8 @@
     "tsConfigPath": "./tsconfig.base.json",
     "webpack": false,
     "deleteOutDir": true,
-    "assets": [],
-    "watchAssets": false,
+    "assets": ["**/*.hbs"],
+    "watchAssets": true,
     "plugins": [
       {
         "name": "@nestjs/swagger",

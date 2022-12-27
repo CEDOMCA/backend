@@ -108,7 +108,7 @@ export class UserController {
    * Change the password of a given user.
    */
   @Patch('change-password')
-  @ApiNotFoundResponse({ description: 'Usuário não encontrado.' })
+  @ApiBadRequestResponse({ description: 'Token de recuperação de senha inválido.' })
   async changePassword(
     @Query() queryChangePasswordDto: QueryChangePasswordDto,
     @Body() changePasswordDto: ChangePasswordDto,

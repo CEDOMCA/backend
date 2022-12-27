@@ -91,24 +91,25 @@ export class UserService {
   }
 
   async changeUserPassword(password: string, authKey: string) {
-    const decodedAuthKey = jwt.verify(authKey, this.configService.get('JWT_SECRET')) as {
-      email: string;
-    };
-
-    const user = await this.userModel.findOne({
-      authKey,
-      email: decodedAuthKey.email,
-    });
-
-    if (!user) throw new BadRequestException('Chave de autenticação inválida.');
-
-    const hashedPassword = await hash(password, 12);
-    await this.userModel.findOneAndUpdate(
-      { email: decodedAuthKey.email },
-      {
-        password: hashedPassword,
-        authKey: undefined,
-      },
-    );
+    try {
+      const decodedAuthKey = jwt.verify(authKey, this.configService.get('JWT_SECRET')) as {
+        email: string;
+      };
+      const user = await this.userModel.findOne({
+        authKey,
+        email: decodedAuthKey.email,
+      });
+      if (!user) throw new BadRequestException('Token de recuperação de senha inválido.');
+      const hashedPassword = await hash(password, 12);
+      await this.userModel.findOneAndUpdate(
+        { email: decodedAuthKey.email },
+        {
+          password: hashedPassword,
+          authKey: undefined,
+        },
+      );
+    } catch (error) {
+      throw new BadRequestException('Token de recuperação de senha inválido.');
+    }
   }
 }

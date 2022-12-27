@@ -102,10 +102,11 @@ export class UserService {
 
     if (!user) throw new BadRequestException('Chave de autenticação inválida.');
 
+    const hashedPassword = await hash(password, 12);
     await this.userModel.findOneAndUpdate(
       { email: decodedAuthKey.email },
       {
-        password,
+        password: hashedPassword,
         authKey: undefined,
       },
     );

@@ -10,6 +10,8 @@ import {
   HttpStatus,
   Put,
   Get,
+  Query,
+  Patch,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -19,7 +21,14 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-import { CreateUserDto, UserRoDto, UpdateUserDto } from './dto';
+import {
+  CreateUserDto,
+  UserRoDto,
+  UpdateUserDto,
+  RecoverPassordDto,
+  QueryChangePasswordDto,
+  ChangePasswordDto,
+} from './dto';
 import { User } from './schemas/user.schema';
 import { UserService } from './user.service';
 
@@ -81,5 +90,32 @@ export class UserController {
   @ApiNoContentResponse({ description: 'Usuário deletado com sucesso.' })
   async delete(@Param('user_id') id: string) {
     return this.userService.delete(id);
+  }
+
+  /**
+   * Send a recovery password email to a given user.
+   */
+  @Post('recover-password')
+  async recoverPassword(@Body() passwordResetDto: RecoverPassordDto) {
+    await this.userService.passwordRecoveryEmail(passwordResetDto.email);
+
+    return {
+      message: 'Um e-mail foi enviado para você com as instruções para recuperar sua senha.',
+    };
+  }
+
+  /**
+   * Change the password of a given user.
+   */
+  @Patch('change-password')
+  @ApiNotFoundResponse({ description: 'Usuário não encontrado.' })
+  async changePassword(
+    @Query() queryChangePasswordDto: QueryChangePasswordDto,
+    @Body() changePasswordDto: ChangePasswordDto,
+  ): Promise<void> {
+    return this.userService.changeUserPassword(
+      changePasswordDto.password,
+      queryChangePasswordDto.authKey,
+    );
   }
 }

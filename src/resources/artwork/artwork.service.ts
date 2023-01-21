@@ -2,6 +2,8 @@ import { ConflictException, Injectable, NotFoundException } from '@nestjs/common
 import { InjectModel } from '@nestjs/mongoose';
 import { isValidObjectId, Model } from 'mongoose';
 
+import { FetchArtworksByAttributesDto } from '@/resources/artwork/dto/requests/fetch-artworks-by-attributes.dto';
+
 import { CreateArtworkDto, QueryArtworkDto } from './dto';
 import { ArtworkDocument } from './schema/artwork.schema';
 
@@ -73,5 +75,29 @@ export class ArtworkService {
 
   deleteArtwork(artworkId: string) {
     return this.artworkModel.findByIdAndDelete(artworkId).exec();
+  }
+
+  async fetchArtworksByAttributes(
+    fontName: string,
+    fetchArtworksByAttributesDto: FetchArtworksByAttributesDto,
+  ) {
+    const names = !Array.isArray(fetchArtworksByAttributesDto.names)
+      ? [fetchArtworksByAttributesDto.names]
+      : fetchArtworksByAttributesDto.names;
+    const values = !Array.isArray(fetchArtworksByAttributesDto.values)
+      ? [fetchArtworksByAttributesDto.values]
+      : fetchArtworksByAttributesDto.values;
+
+    return this.artworkModel
+      .find({
+        font: fontName.toLowerCase(),
+        'attributes.name': {
+          $all: names,
+        },
+        'attributes.value': {
+          $all: values,
+        },
+      })
+      .exec();
   }
 }

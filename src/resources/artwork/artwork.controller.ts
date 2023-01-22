@@ -11,9 +11,13 @@ import {
   Post,
   Put,
   Query,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiConflictResponse,
+  ApiConsumes,
   ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiTags,
@@ -60,9 +64,11 @@ export class ArtworkController {
    * Create a new artwork.
    */
   @Post('artworks')
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('file'))
   @ApiConflictResponse({ description: 'Já existe uma obra com o código informado.' })
-  async createArtwork(@Body() createArtworkDto: CreateArtworkDto) {
-    const artwork = await this.artworkService.createArtwork(createArtworkDto);
+  async createArtwork(@Body() createArtworkDto: CreateArtworkDto, @UploadedFile() file) {
+    const artwork = await this.artworkService.createArtwork(createArtworkDto, file);
 
     return this.mapper.mapAsync(artwork, Artwork, ArtworkRoDto);
   }

@@ -30,9 +30,9 @@ export class Artwork extends BaseDocumentWithId {
   @AutoMap()
   font: string;
 
-  @Prop({ schema: ArtworkAttributes })
-  @AutoMap(() => [ArtworkAttributes])
-  attributes: ArtworkAttributes[];
+  @Prop()
+  @AutoMap()
+  filePath: string;
 }
 
 export const ArtworkSchema = SchemaFactory.createForClass(Artwork);

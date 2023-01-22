@@ -5,7 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { BaseDocumentWithIdRoDto } from '@/database/base-documents.ro-dto';
 import { BaseDocumentWithId } from '@/database/base-documents.schema';
 
-import { ArtworkRoDto, ArtworkAttributesRoDto } from './dto';
+import { ArtworkRoDto } from './dto';
 import { Artwork, ArtworkAttributes } from './schema/artwork.schema';
 
 @Injectable()
@@ -23,6 +23,6 @@ export class ArtworkProfile extends AutomapperProfile {
   private registerMappingToRoDto(mapper: Mapper): void {
     createMap(mapper, Artwork, ArtworkRoDto, extend(BaseDocumentWithId, BaseDocumentWithIdRoDto));
 
-    createMap(mapper, ArtworkAttributes, ArtworkAttributesRoDto);
+    createMap(mapper, ArtworkAttributes);
   }
 }

@@ -12,7 +12,7 @@ export class CreateUserDto {
   fullName: string;
 
   @ApiProperty()
-  @IsDateString({}, { message: 'Data de nascimento inválida.' })
+  @IsDateString({}, { message: 'Data de nascimento é obrigatória.' })
   @BeetweenYearsOld(1, 100, { message: 'Data de nascimento inválida.' })
   birthDate: Date;
 

@@ -2,8 +2,12 @@ import { Storage } from '@google-cloud/storage';
 import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { isValidObjectId, Model } from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
 
+import { CreateCommentDto } from '@/resources/artwork/dto/requests/create-comment.dto';
 import { FetchArtworksByAttributesDto } from '@/resources/artwork/dto/requests/fetch-artworks-by-attributes.dto';
+import { SessionData } from '@/resources/auth/auth.controller';
+import { Roles } from '@/resources/user/user.constants';
 
 import { CreateArtworkDto, QueryArtworkDto } from './dto';
 import { Artwork, ArtworkDocument } from './schema/artwork.schema';
@@ -125,5 +129,60 @@ export class ArtworkService {
         },
       })
       .exec();
+  }
+
+  async createComment(artworkId: string, createCommentDto: CreateCommentDto, session: SessionData) {
+    const artwork = await this.getOneArtwork(artworkId);
+    if (!artwork) throw new NotFoundException('Obra não encontrada.');
+    if (!session.passport) throw new NotFoundException('Usuário não encontrado.');
+    const { user } = session.passport;
+    artwork.comments.push({
+      id: uuidv4(),
+      comment: createCommentDto.comment,
+      userId: user.id,
+    });
+    return artwork.save();
+  }
+
+  async deleteComment(artworkId: string, commentId: string, session: SessionData) {
+    if (!session.passport) throw new NotFoundException('Usuário não encontrado.');
+    const { user } = session.passport;
+
+    const artwork = await this.getOneArtwork(artworkId);
+    if (!artwork) throw new NotFoundException('Obra não encontrada.');
+
+    const comment = artwork.comments.find((c) => c.id === commentId);
+    if (!comment) throw new NotFoundException('Comentário não encontrado.');
+
+    if (comment.userId !== user.id || user.role !== Roles.visitor)
+      throw new NotFoundException('Usuário não autorizado.');
+    artwork.comments = artwork.comments.filter((c) => c.id !== commentId);
+    return artwork.save();
+  }
+
+  async updateComment(
+    artworkId: string,
+    commentId: string,
+    createCommentDto: CreateCommentDto,
+    session: SessionData,
+  ) {
+    if (!session.passport) throw new NotFoundException('Usuário não encontrado.');
+    const { user } = session.passport;
+
+    const artwork = await this.getOneArtwork(artworkId);
+    if (!artwork) throw new NotFoundException('Obra não encontrada.');
+
+    const commentToUpdate = artwork.comments.find((c) => c.id === commentId);
+    if (!commentToUpdate) throw new NotFoundException('Comentário não encontrado.');
+
+    if (commentToUpdate.userId !== user.id) throw new NotFoundException('Usuário não autorizado.');
+
+    artwork.comments.forEach((c) => {
+      if (c.id === commentId) c.comment = createCommentDto.comment;
+    });
+
+    await artwork.updateOne(artwork);
+
+    return artwork;
   }
 }

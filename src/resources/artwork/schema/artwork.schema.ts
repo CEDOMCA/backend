@@ -14,6 +14,20 @@ export class ArtworkAttributes {
   value: string;
 }
 
+export class ArtworkComments {
+  @Prop({ required: true })
+  @AutoMap()
+  id: string;
+
+  @Prop({ required: true })
+  @AutoMap()
+  comment: string;
+
+  @Prop({ required: true })
+  @AutoMap()
+  userId: string;
+}
+
 export type ArtworkDocument = HydratedDocument<Artwork>;
 
 @Schema()
@@ -33,6 +47,10 @@ export class Artwork extends BaseDocumentWithId {
   @Prop()
   @AutoMap()
   filePath: string;
+
+  @Prop()
+  @AutoMap()
+  comments: ArtworkComments[];
 }
 
 export const ArtworkSchema = SchemaFactory.createForClass(Artwork);

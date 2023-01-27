@@ -1,6 +1,7 @@
 import { AutoMap } from '@automapper/classes';
 
 import { BaseDocumentWithIdRoDto } from '@/database/base-documents.ro-dto';
+import { ArtworkComments } from '@/resources/artwork/schema/artwork.schema';
 
 export class ArtworkRoDto extends BaseDocumentWithIdRoDto {
   @AutoMap()
@@ -14,4 +15,7 @@ export class ArtworkRoDto extends BaseDocumentWithIdRoDto {
 
   @AutoMap()
   filePath: string;
+
+  @AutoMap()
+  comments: ArtworkComments[];
 }

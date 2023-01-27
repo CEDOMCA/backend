@@ -11,6 +11,7 @@ import {
   Post,
   Put,
   Query,
+  Session,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -21,9 +22,12 @@ import {
   ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
+import { CreateCommentDto } from '@/resources/artwork/dto/requests/create-comment.dto';
 import { FetchArtworksByAttributesDto } from '@/resources/artwork/dto/requests/fetch-artworks-by-attributes.dto';
+import { SessionData } from '@/resources/auth/auth.controller';
 
 import { ArtworkService } from './artwork.service';
 import { ArtworkRoDto, CreateArtworkDto, QueryArtworkDto } from './dto';
@@ -44,9 +48,7 @@ export class ArtworkController {
    */
   @Get('artworks')
   async getArtworks(@Query() queryArtworkDto: QueryArtworkDto) {
-    const artwork = await this.artworkService.getArtworks(queryArtworkDto);
-
-    return this.mapper.mapArrayAsync(artwork, Artwork, ArtworkRoDto);
+    return this.artworkService.getArtworks(queryArtworkDto);
   }
 
   /**
@@ -55,9 +57,7 @@ export class ArtworkController {
   @Get('artworks/:artwork_id')
   @ApiNotFoundResponse({ description: 'Obra não encontrada.' })
   async getOneArtwork(@Param('artwork_id') artworkId: string) {
-    const artwork = await this.artworkService.getOneArtwork(artworkId);
-
-    return this.mapper.mapAsync(artwork, Artwork, ArtworkRoDto);
+    return this.artworkService.getOneArtwork(artworkId);
   }
 
   /**
@@ -68,9 +68,7 @@ export class ArtworkController {
   @UseInterceptors(FileInterceptor('file'))
   @ApiConflictResponse({ description: 'Já existe uma obra com o código informado.' })
   async createArtwork(@Body() createArtworkDto: CreateArtworkDto, @UploadedFile() file) {
-    const artwork = await this.artworkService.createArtwork(createArtworkDto, file);
-
-    return this.mapper.mapAsync(artwork, Artwork, ArtworkRoDto);
+    return this.artworkService.createArtwork(createArtworkDto, file);
   }
 
   /**
@@ -82,9 +80,7 @@ export class ArtworkController {
     @Param('artwork_id') artworkId: string,
     @Body() createArtworkDto: CreateArtworkDto,
   ) {
-    const artwork = await this.artworkService.updateOneArtwork(artworkId, createArtworkDto);
-
-    return this.mapper.mapAsync(artwork, Artwork, ArtworkRoDto);
+    return this.artworkService.updateOneArtwork(artworkId, createArtworkDto);
   }
 
   /**
@@ -109,5 +105,50 @@ export class ArtworkController {
     );
 
     return this.mapper.mapArrayAsync(artworks, Artwork, ArtworkRoDto);
+  }
+
+  /**
+   * Create a new comment.
+   */
+  @Post('artworks/:artwork_id')
+  @ApiUnauthorizedResponse({ description: 'Usuário não autorizado.' })
+  @ApiNotFoundResponse({ description: 'Fonte não encontrada.' })
+  async createComment(
+    @Session() session: SessionData,
+    @Param('artwork_id') artwork_id: string,
+    @Body() createCommentDto: CreateCommentDto,
+  ) {
+    return this.artworkService.createComment(artwork_id, createCommentDto, session);
+  }
+
+  /**
+   * Delete a given comment. If the comment does not exist, it is ignored.
+   */
+  @Delete('artworks/:artwork_id/:comment_id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiNoContentResponse({ description: 'Comentário deletado com sucesso.' })
+  @ApiUnauthorizedResponse({ description: 'Usuário não autorizado.' })
+  @ApiNotFoundResponse({ description: 'Fonte não encontrada.' })
+  async deleteComment(
+    @Session() session: SessionData,
+    @Param('artwork_id') artwork_id: string,
+    @Param('comment_id') comment_id: string,
+  ) {
+    return this.artworkService.deleteComment(artwork_id, comment_id, session);
+  }
+
+  /**
+   * Update a given comment.
+   */
+  @Put('artworks/:artwork_id/:comment_id')
+  @ApiUnauthorizedResponse({ description: 'Usuário não autorizado.' })
+  @ApiNotFoundResponse({ description: 'Fonte ou comentário não encontrados.' })
+  async updateComment(
+    @Session() session: SessionData,
+    @Param('artwork_id') artwork_id: string,
+    @Param('comment_id') comment_id: string,
+    @Body() createCommentDto: CreateCommentDto,
+  ) {
+    return this.artworkService.updateComment(artwork_id, comment_id, createCommentDto, session);
   }
 }

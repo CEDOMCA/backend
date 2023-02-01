@@ -1,5 +1,6 @@
 import { Storage } from '@google-cloud/storage';
 import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { isValidObjectId, Model } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
@@ -17,20 +18,24 @@ export class ArtworkService {
   constructor(
     @InjectModel('Artwork') private readonly artworkModel: Model<ArtworkDocument>,
     @Inject('STORAGE_CONNECTION') private readonly storage: Storage,
+    private readonly configService: ConfigService,
   ) {}
 
-  getArtworks(queryArtworkDto: QueryArtworkDto) {
-    const { font } = queryArtworkDto;
-
-    if (font) {
-      return this.artworkModel
-        .find({
-          font: font.toLowerCase(),
-        })
-        .exec();
+  async getArtworks(queryArtworkDto: QueryArtworkDto) {
+    const artworks = this.artworkModel.find();
+    if (queryArtworkDto.font) {
+      artworks.where('font').equals(queryArtworkDto.font.toLowerCase());
     }
-
-    return this.artworkModel.find().exec();
+    return (await artworks).map((artwork) => {
+      return {
+        id: artwork.id,
+        code: artwork.code,
+        title: artwork.title,
+        font: artwork.font,
+        filePath: artwork.filePath,
+        comments: artwork.comments,
+      };
+    });
   }
 
   async getOneArtwork(artworkId: string) {
@@ -61,7 +66,7 @@ export class ArtworkService {
         font: createArtworkDto.font.toLowerCase(),
       });
       const savedArtwork = await artwork.save();
-      this.saveArtworkFile(savedArtwork, file);
+      if (file) this.saveArtworkFile(savedArtwork, file);
       return savedArtwork;
     } catch (err) {
       throw new ConflictException(
@@ -80,7 +85,7 @@ export class ArtworkService {
       },
     });
     stream.end(file.buffer);
-    artwork.filePath = filePath;
+    artwork.filePath = this.configService.get('GOOGLE_CLOUD_STORAGE_URL') + '/' + filePath;
     await artwork.save();
   }
 

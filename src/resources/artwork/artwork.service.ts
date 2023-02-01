@@ -49,7 +49,14 @@ export class ArtworkService {
     if (artwork === null) {
       throw new NotFoundException('Obra não encontrada.');
     }
-    return artwork;
+    return {
+      id: artwork.id,
+      code: artwork.code,
+      title: artwork.title,
+      font: artwork.font,
+      filePath: artwork.filePath,
+      comments: artwork.comments,
+    };
   }
 
   async getArtworkFile(artwork: Artwork) {
@@ -137,7 +144,7 @@ export class ArtworkService {
   }
 
   async createComment(artworkId: string, createCommentDto: CreateCommentDto, session: SessionData) {
-    const artwork = await this.getOneArtwork(artworkId);
+    const artwork = await this.artworkModel.findById(artworkId).exec();
     if (!artwork) throw new NotFoundException('Obra não encontrada.');
     if (!session.passport) throw new NotFoundException('Usuário não encontrado.');
     const { user } = session.passport;
@@ -153,7 +160,7 @@ export class ArtworkService {
     if (!session.passport) throw new NotFoundException('Usuário não encontrado.');
     const { user } = session.passport;
 
-    const artwork = await this.getOneArtwork(artworkId);
+    const artwork = await this.artworkModel.findById(artworkId).exec();
     if (!artwork) throw new NotFoundException('Obra não encontrada.');
 
     const comment = artwork.comments.find((c) => c.id === commentId);
@@ -174,7 +181,7 @@ export class ArtworkService {
     if (!session.passport) throw new NotFoundException('Usuário não encontrado.');
     const { user } = session.passport;
 
-    const artwork = await this.getOneArtwork(artworkId);
+    const artwork = await this.artworkModel.findById(artworkId).exec();
     if (!artwork) throw new NotFoundException('Obra não encontrada.');
 
     const commentToUpdate = artwork.comments.find((c) => c.id === commentId);

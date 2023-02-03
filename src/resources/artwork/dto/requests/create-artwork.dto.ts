@@ -24,8 +24,10 @@ export class CreateArtworkDto {
   @IsNotEmpty({ message: 'A fonte da obra é obrigatória.' })
   font: string;
 
-  @ApiProperty()
-  attributes: CreateArtworkAttributes[];
+  @ApiProperty({
+    type: [CreateArtworkAttributes],
+  })
+  attributes: string;
 
   @ApiProperty({ type: 'string', format: 'binary', required: false })
   file: BinaryType;

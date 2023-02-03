@@ -33,6 +33,7 @@ export class ArtworkService {
         title: artwork.title,
         font: artwork.font,
         filePath: artwork.filePath,
+        attributes: artwork.attributes,
         comments: artwork.comments,
       };
     });
@@ -55,6 +56,7 @@ export class ArtworkService {
       title: artwork.title,
       font: artwork.font,
       filePath: artwork.filePath,
+      attributes: artwork.attributes,
       comments: artwork.comments,
     };
   }
@@ -70,6 +72,7 @@ export class ArtworkService {
     try {
       const artwork = new this.artworkModel({
         ...createArtworkDto,
+        attributes: this.stringToObjectAttributes(createArtworkDto.attributes),
         font: createArtworkDto.font.toLowerCase(),
       });
       const savedArtwork = await artwork.save();
@@ -196,5 +199,14 @@ export class ArtworkService {
     await artwork.updateOne(artwork);
 
     return artwork;
+  }
+
+  stringToObjectAttributes(value: string) {
+    const attributes = value.split('},{').map((attribute) => {
+      if (attribute[0] !== '{') attribute = '{' + attribute;
+      if (attribute[attribute.length - 1] !== '}') attribute += '}';
+      return JSON.parse(attribute);
+    });
+    return attributes;
   }
 }

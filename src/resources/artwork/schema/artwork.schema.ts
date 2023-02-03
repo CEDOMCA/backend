@@ -48,6 +48,10 @@ export class Artwork extends BaseDocumentWithId {
   @AutoMap()
   filePath: string;
 
+  @Prop({ schema: ArtworkAttributes })
+  @AutoMap(() => [ArtworkAttributes])
+  attributes: ArtworkAttributes[];
+
   @Prop()
   @AutoMap()
   comments: ArtworkComments[];

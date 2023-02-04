@@ -72,7 +72,7 @@ export class ArtworkService {
     try {
       const artwork = new this.artworkModel({
         ...createArtworkDto,
-        attributes: this.stringToObjectAttributes(createArtworkDto.attributes),
+        attributes: JSON.parse(createArtworkDto.attributes),
         font: createArtworkDto.font.toLowerCase(),
       });
       const savedArtwork = await artwork.save();
@@ -226,14 +226,5 @@ export class ArtworkService {
       attributes: artwork.attributes,
       comments: artwork.comments,
     };
-  }
-
-  stringToObjectAttributes(value: string) {
-    const attributes = value.split('},{').map((attribute) => {
-      if (attribute[0] !== '{') attribute = '{' + attribute;
-      if (attribute[attribute.length - 1] !== '}') attribute += '}';
-      return JSON.parse(attribute);
-    });
-    return attributes;
   }
 }

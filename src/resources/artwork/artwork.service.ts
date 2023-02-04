@@ -156,7 +156,16 @@ export class ArtworkService {
       comment: createCommentDto.comment,
       userId: user.id,
     });
-    return artwork.save();
+    const savedArtwork = await artwork.save();
+    return {
+      id: savedArtwork.id,
+      code: savedArtwork.code,
+      title: savedArtwork.title,
+      font: savedArtwork.font,
+      filePath: savedArtwork.filePath,
+      attributes: savedArtwork.attributes,
+      comments: savedArtwork.comments,
+    };
   }
 
   async deleteComment(artworkId: string, commentId: string, session: SessionData) {
@@ -172,7 +181,17 @@ export class ArtworkService {
     if (comment.userId !== user.id || user.role !== Roles.visitor)
       throw new NotFoundException('Usuário não autorizado.');
     artwork.comments = artwork.comments.filter((c) => c.id !== commentId);
-    return artwork.save();
+
+    const savedArtwork = await artwork.save();
+    return {
+      id: savedArtwork.id,
+      code: savedArtwork.code,
+      title: savedArtwork.title,
+      font: savedArtwork.font,
+      filePath: savedArtwork.filePath,
+      attributes: savedArtwork.attributes,
+      comments: savedArtwork.comments,
+    };
   }
 
   async updateComment(
@@ -198,7 +217,15 @@ export class ArtworkService {
 
     await artwork.updateOne(artwork);
 
-    return artwork;
+    return {
+      id: artwork.id,
+      code: artwork.code,
+      title: artwork.title,
+      font: artwork.font,
+      filePath: artwork.filePath,
+      attributes: artwork.attributes,
+      comments: artwork.comments,
+    };
   }
 
   stringToObjectAttributes(value: string) {

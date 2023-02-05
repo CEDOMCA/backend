@@ -26,6 +26,14 @@ export class ArtworkComments {
   @Prop({ required: true })
   @AutoMap()
   userId: string;
+
+  @Prop({ required: true })
+  @AutoMap()
+  fullName: string;
+
+  @Prop({ required: true })
+  @AutoMap()
+  created_at: Date;
 }
 
 export type ArtworkDocument = HydratedDocument<Artwork>;

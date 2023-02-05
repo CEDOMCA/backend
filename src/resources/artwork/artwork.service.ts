@@ -155,6 +155,8 @@ export class ArtworkService {
       id: uuidv4(),
       comment: createCommentDto.comment,
       userId: user.id,
+      fullName: user.fullName,
+      created_at: new Date(),
     });
     const savedArtwork = await artwork.save();
     return {

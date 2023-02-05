@@ -156,7 +156,7 @@ export class ArtworkService {
       comment: createCommentDto.comment,
       userId: user.id,
       fullName: user.fullName,
-      created_at: new Date(),
+      createdAt: new Date(),
     });
     const savedArtwork = await artwork.save();
     return {

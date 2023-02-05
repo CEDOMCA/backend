@@ -33,7 +33,7 @@ export class ArtworkComments {
 
   @Prop({ required: true })
   @AutoMap()
-  created_at: Date;
+  createdAt: Date;
 }
 
 export type ArtworkDocument = HydratedDocument<Artwork>;

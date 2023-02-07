@@ -2,6 +2,7 @@ import { Storage } from '@google-cloud/storage';
 import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
+import type { Request } from 'express';
 import { isValidObjectId, Model } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -146,11 +147,11 @@ export class ArtworkService {
       .exec();
   }
 
-  async createComment(artworkId: string, createCommentDto: CreateCommentDto, session: SessionData) {
+  async createComment(artworkId: string, createCommentDto: CreateCommentDto, request: Request) {
     const artwork = await this.artworkModel.findById(artworkId).exec();
     if (!artwork) throw new NotFoundException('Obra não encontrada.');
-    if (!session.passport) throw new NotFoundException('Usuário não encontrado.');
-    const { user } = session.passport;
+    const { user } = request as unknown as { user: { id: string; fullName: string } };
+    if (!user) throw new NotFoundException({ user, message: 'Usuário não encontrado.' });
     artwork.comments.push({
       id: uuidv4(),
       comment: createCommentDto.comment,

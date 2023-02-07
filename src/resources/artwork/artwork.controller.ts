@@ -7,6 +7,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Logger,
   Param,
   Post,
   Put,
@@ -120,6 +121,10 @@ export class ArtworkController {
     @Param('artwork_id') artwork_id: string,
     @Body() createCommentDto: CreateCommentDto,
   ) {
+    console.log(request);
+    Logger.log(JSON.stringify(request.headers), 'request.headers');
+    Logger.log(JSON.stringify(request.user), 'request.user');
+    Logger.log(JSON.stringify(request.session), 'request.session');
     return this.artworkService.createComment(artwork_id, createCommentDto, request);
   }
 

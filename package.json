@@ -10,7 +10,7 @@
   "scripts": {
     "postinstall": "husky install",
     "prebuild": "rimraf dist",
-    "build": "nest build",
+    "build": "NODE_ENV=production nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",

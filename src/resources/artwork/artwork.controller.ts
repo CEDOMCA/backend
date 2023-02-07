@@ -7,12 +7,10 @@ import {
   Get,
   HttpCode,
   HttpStatus,
-  Logger,
   Param,
   Post,
   Put,
   Query,
-  Req,
   Session,
   UploadedFile,
   UseInterceptors,
@@ -26,7 +24,6 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import type { Request } from 'express';
 
 import { CreateCommentDto } from '@/resources/artwork/dto/requests/create-comment.dto';
 import { FetchArtworksByAttributesDto } from '@/resources/artwork/dto/requests/fetch-artworks-by-attributes.dto';
@@ -117,15 +114,11 @@ export class ArtworkController {
   @ApiUnauthorizedResponse({ description: 'Usuário não autorizado.' })
   @ApiNotFoundResponse({ description: 'Fonte não encontrada.' })
   async createComment(
-    @Req() request: Request,
+    @Session() session: SessionData,
     @Param('artwork_id') artwork_id: string,
     @Body() createCommentDto: CreateCommentDto,
   ) {
-    console.log(request);
-    Logger.log(JSON.stringify(request.headers), 'request.headers');
-    Logger.log(JSON.stringify(request.user), 'request.user');
-    Logger.log(JSON.stringify(request.session), 'request.session');
-    return this.artworkService.createComment(artwork_id, createCommentDto, request);
+    return this.artworkService.createComment(artwork_id, createCommentDto, session);
   }
 
   /**

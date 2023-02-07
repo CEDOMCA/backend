@@ -147,11 +147,11 @@ export class ArtworkService {
       .exec();
   }
 
-  async createComment(artworkId: string, createCommentDto: CreateCommentDto, request: Request) {
+  async createComment(artworkId: string, createCommentDto: CreateCommentDto, session: SessionData) {
     const artwork = await this.artworkModel.findById(artworkId).exec();
     if (!artwork) throw new NotFoundException('Obra não encontrada.');
-    const { user } = request as unknown as { user: { id: string; fullName: string } };
-    if (!user) throw new NotFoundException({ user, message: 'Usuário não encontrado.' });
+    if (!session.passport) throw new NotFoundException('Usuário não encontrado.');
+    const { user } = session.passport;
     artwork.comments.push({
       id: uuidv4(),
       comment: createCommentDto.comment,

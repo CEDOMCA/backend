@@ -38,6 +38,7 @@ module.exports = {
         'auth',
         'font',
         'user',
+        'dashboard',
       ],
     ],
   },

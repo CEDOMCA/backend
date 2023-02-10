@@ -14,6 +14,7 @@ import { SeedModule } from '@/database/seeds/seed.module';
 import { GcpStorageModule } from '@/gcp-storage/gcp.storage.module';
 import { ArtworkModule } from '@/resources/artwork/artwork.module';
 import { AuthModule } from '@/resources/auth/auth.module';
+import { DashboardModule } from '@/resources/dashboard/dashboard.module';
 import { FontModule } from '@/resources/font/font.module';
 import { UserModule } from '@/resources/user/user.module';
 import { RedisModule } from '@/session/redis.module';
@@ -36,6 +37,7 @@ import { RedisModule } from '@/session/redis.module';
     UserModule,
     GcpStorageModule,
     SeedModule,
+    DashboardModule,
   ],
 })
 export class AppModule implements NestModule {

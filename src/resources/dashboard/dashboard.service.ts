@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { ArtworkDocument } from '@/resources/artwork/schema/artwork.schema';
+import { FontDocument } from '@/resources/font/schema/font.schema';
 import { UserDocument } from '@/resources/user/schemas/user.schema';
 
 @Injectable()
@@ -12,6 +13,8 @@ export class DashboardService {
     private userModel: Model<UserDocument>,
     @InjectModel('Artwork')
     private artworkModel: Model<ArtworkDocument>,
+    @InjectModel('Font')
+    private readonly fontModel: Model<FontDocument>,
   ) {}
 
   async getHowManyUsers() {
@@ -20,7 +23,13 @@ export class DashboardService {
     };
   }
 
-  async getHowManyArtworksByArtwork() {
+  async getFonts() {
+    const fonts = await this.fontModel.find().exec();
+    return fonts.map((font) => font.name.toLowerCase());
+  }
+
+  async getHowManyArtworksByFont() {
+    const fonts = await this.getFonts();
     const artworks = await this.artworkModel.aggregate([
       {
         $group: {
@@ -30,15 +39,18 @@ export class DashboardService {
       },
     ]);
 
-    return artworks.map((artwork) => ({
-      font: artwork._id,
-      count: artwork.count,
-    }));
+    return fonts.map((font) => {
+      const artwork = artworks.find((artwork) => artwork._id === font);
+      return {
+        font,
+        count: artwork ? artwork.count : 0,
+      };
+    });
   }
 
   async getDashboard() {
     const users = await this.getHowManyUsers();
-    const artworks = await this.getHowManyArtworksByArtwork();
+    const artworks = await this.getHowManyArtworksByFont();
 
     return {
       users,

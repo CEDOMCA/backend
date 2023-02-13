@@ -30,6 +30,7 @@ export class DashboardService {
 
   async getHowManyArtworksByFont() {
     const fonts = await this.getFonts();
+    fonts.sort();
     const artworks = await this.artworkModel.aggregate([
       {
         $group: {

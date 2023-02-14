@@ -4,14 +4,6 @@
     "description": "Nesta seção serão organizados os documentos institucionais referentes a temas administrativos, pedagógicos e das trajetórias pessoais de docentes.",
     "attributes": [
       {
-        "name": "código",
-        "domain": "alphanumeric"
-      },
-      {
-        "name": "título",
-        "domain": "alphanumeric"
-      },
-      {
         "name": "tipo",
         "domain": "alphanumeric"
       },
@@ -61,14 +53,6 @@
     "name": "Fonte bibliográfica",
     "description": "Nesta seção serão organizados os livros, coleções, ou qualquer outra fonte relacionada a textos.",
     "attributes": [
-      {
-        "name": "código",
-        "domain": "alphanumeric"
-      },
-      {
-        "name": "título",
-        "domain": "alphanumeric"
-      },
       {
         "name": "subtítulo",
         "domain": "alphanumeric"
@@ -136,10 +120,6 @@
     "description": "Nesta seção serão organizados os programas de apresentações musicais e todo e qualquer registro impresso de música.",
     "attributes": [
       {
-        "name": "código",
-        "domain": "alphanumeric"
-      },
-      {
         "name": "suporte",
         "domain": "alphanumeric"
       },
@@ -150,10 +130,6 @@
       {
         "name": "compositor",
         "domain": "textual"
-      },
-      {
-        "name": "título",
-        "domain": "alphanumeric"
       },
       {
         "name": "subtítulo",
@@ -210,10 +186,6 @@
     "description": "Nesta seção serão organizados os vinis, fitas cassetes, vídeos e outras fontes gravadas.",
     "attributes": [
       {
-        "name": "código",
-        "domain": "alphanumeric"
-      },
-      {
         "name": "suporte",
         "domain": "alphanumeric"
       },
@@ -224,10 +196,6 @@
       {
         "name": "compositores",
         "domain": "textual"
-      },
-      {
-        "name": "título",
-        "domain": "alphanumeric"
       },
       {
         "name": "subtítulo",
@@ -328,16 +296,8 @@
     "description": "Nesta seção serão incluídas fotografias, mapas, jornais e registros diversos.",
     "attributes": [
       {
-        "name": "código",
-        "domain": "alphanumeric"
-      },
-      {
         "name": "autor",
         "domain": "textual"
-      },
-      {
-        "name": "título",
-        "domain": "alphanumeric"
       },
       {
         "name": "assunto",

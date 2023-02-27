@@ -40,11 +40,23 @@ export class DashboardService {
       },
     ]);
 
+    for (const font of artworks) {
+      font._id = font._id.toLowerCase();
+    }
+
+    const reduced_artworks = artworks.reduce((acc, curr) => {
+      if (acc[curr._id]) {
+        acc[curr._id] += curr.count;
+      } else {
+        acc[curr._id] = curr.count;
+      }
+      return acc;
+    }, {});
+
     return fonts.map((font) => {
-      const artwork = artworks.find((artwork) => artwork._id === font);
       return {
         font,
-        count: artwork ? artwork.count : 0,
+        count: reduced_artworks[font],
       };
     });
   }

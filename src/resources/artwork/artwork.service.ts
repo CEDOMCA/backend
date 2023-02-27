@@ -2,7 +2,6 @@ import { Storage } from '@google-cloud/storage';
 import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
-import type { Request } from 'express';
 import { isValidObjectId, Model } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -23,11 +22,13 @@ export class ArtworkService {
   ) {}
 
   async getArtworks(queryArtworkDto: QueryArtworkDto) {
-    const artworks = this.artworkModel.find();
+    const whenArtworks = this.artworkModel.find().sort({ title: 1 });
     if (queryArtworkDto.font) {
-      artworks.where('font').equals(queryArtworkDto.font.toLowerCase());
+      whenArtworks.where('font').equals(queryArtworkDto.font.toLowerCase());
     }
-    return (await artworks).map((artwork) => {
+
+    const artworks = await whenArtworks.exec();
+    return artworks.map((artwork) => {
       return {
         id: artwork.id,
         code: artwork.code,
@@ -144,6 +145,7 @@ export class ArtworkService {
           $all: values,
         },
       })
+      .sort({ title: 1 })
       .exec();
   }
 

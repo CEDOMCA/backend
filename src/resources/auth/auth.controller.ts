@@ -13,7 +13,7 @@ import {
 import { ApiBody, ApiNoContentResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import type { Request, Response } from 'express';
 
-import { AuthenticatedGuard, LoginGuard, UnauthenticatedGuard } from '@/resources/auth/guards';
+import { LoginGuard } from '@/resources/auth/guards';
 import { UserLogin, UserSessionRoDto } from '@/resources/user/dto';
 
 export type SessionData = Request['session'] & {
@@ -31,7 +31,7 @@ export class AuthController {
    */
   @Post('login')
   @ApiBody({ type: UserLogin })
-  @UseGuards(UnauthenticatedGuard, LoginGuard)
+  @UseGuards(LoginGuard)
   @ApiUnauthorizedResponse({ description: 'E-mail ou senha incorretos' })
   userLogin(@Session() session: SessionData): UserSessionRoDto {
     return session.passport.user;
@@ -41,7 +41,6 @@ export class AuthController {
    * Log a user out by destroying their session.
    */
   @Post('logout')
-  @UseGuards(AuthenticatedGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiNoContentResponse({ description: 'Logout suceeded' })
   async userLogout(@Req() request: Request, @Res() response: Response): Promise<void> {

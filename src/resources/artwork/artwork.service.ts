@@ -183,9 +183,7 @@ export class ArtworkService {
     const comment = artwork.comments.find((c) => c.id === commentId);
     if (!comment) throw new NotFoundException('Comentário não encontrado.');
 
-    console.log(user);
-    console.log(user.role !== Roles.visitor);
-    if (comment.userId !== user.id || user.role !== Roles.visitor)
+    if (comment.userId !== user.id && user.role === Roles.visitor)
       throw new NotFoundException('Usuário não autorizado.');
     artwork.comments = artwork.comments.filter((c) => c.id !== commentId);
 

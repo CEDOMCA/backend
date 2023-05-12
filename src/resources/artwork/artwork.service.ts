@@ -97,7 +97,7 @@ export class ArtworkService {
       },
     });
     stream.end(file.buffer);
-    artwork.filePath = this.configService.get('GOOGLE_CLOUD_STORAGE_URL') + '/' + filePath;
+    artwork.filePath = this.configService.get('GCP_BUCKET_URL') + '/' + filePath;
     await artwork.save();
   }
 
